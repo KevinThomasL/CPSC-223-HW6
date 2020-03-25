@@ -279,21 +279,25 @@ int LinkedListCollection<K,V>::size() const
 template<typename K, typename V>
 void LinkedListCollection<K,V>::selection_sort()
 {
+ //Sorted if size is one
  if(size() == 1)
   return;
 
+ //Initializes helper nodes
  Node* cur = head;
  Node* curLast = head;
  Node* small;
  Node* tmp;
  Node* tmpLast;
  int count = 1;
+ //For loop to make sure it doesn't check out of bounds
  for(int i = 1; i < size(); i++)
  {
   small = cur;
   tmp = cur->next;
   tmpLast = cur;
 
+  //Second four loop to get the minimum to swap each time
   for(int j = 1; j < (size()-count); j++)
   {
    if(tmp->key < small->key)
@@ -306,14 +310,18 @@ void LinkedListCollection<K,V>::selection_sort()
 
    tmp = tmp->next;
   }
+  //Assigns minimum key to small node
   if(tmp->key < small->key)
    small = tmp;
 
+  //If comparing to  the first node then small becomes the head
   if(curLast == cur)
    head = small;
+
   if(curLast != cur)
    curLast->next = small;
 
+  //If swapping objects right next to each other
   if(cur->next == small)
   {
    Node* smallNext = small->next;
@@ -328,10 +336,12 @@ void LinkedListCollection<K,V>::selection_sort()
    cur->next = smallNext;
   }
 
+  //Increments variables and nodes to check through again
   curLast = small;
   cur = small->next;
   count++;
 
+  //If at the last node then assign tail
   if(count == size())
   {
    tail = small->next;
@@ -344,20 +354,25 @@ void LinkedListCollection<K,V>::selection_sort()
 template<typename K, typename V>
 void LinkedListCollection<K,V>::insertion_sort()
 {
+ //Initializes helper nodes
  Node* ptr = head;
  Node* temp = ptr->next;
 
+ //Sorted if size is one
  if (size() == 1)
    return;
 
+ //For loop that checks and swaps based on relation to other nodes
  for (int i = 1; i < size(); i++)
  {
+   //If to swap with head
    if (temp->key < head->key) 
    { 
      ptr->next = temp->next;
      temp->next = head;
      head = temp;
    } 
+   //If in order
    else if (temp->key >= ptr->key)
      ptr = ptr->next;
    else
@@ -377,6 +392,7 @@ void LinkedListCollection<K,V>::insertion_sort()
    temp = ptr->next;
  } 
 
+  //Finds and assigns tail once sorting is done
   Node* tailFind = head;
   for(int i = 1; i < size(); i++)
    tailFind = tailFind->next;
