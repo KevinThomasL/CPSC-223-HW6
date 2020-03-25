@@ -350,12 +350,8 @@ void LinkedListCollection<K,V>::insertion_sort()
  if (size() == 1)
    return;
 
- cout << "size: " << size() << endl;
-
- cout << "1" << endl;
  for (int i = 1; i < size(); i++)
  {
-   cout << "2" << endl;	 
    if (temp->key < head->key) 
    { 
      ptr->next = temp->next;
@@ -364,57 +360,29 @@ void LinkedListCollection<K,V>::insertion_sort()
    } 
    else if (temp->key >= ptr->key)
      ptr = ptr->next;
-   else if (ptr->next == temp)
+   else
    {
+    Node* oldPtr = ptr;
     Node* ptr = head;
     while (ptr->next->key < temp->key)
      ptr = ptr->next;
 
-    cout << "3" << endl;
     Node* tmpNext = temp->next;
     Node* nextNode = ptr->next;
     ptr->next = temp;
     temp->next = nextNode;
-    nextNode->next = tmpNext;
+    oldPtr->next = tmpNext;
    }
-   else
-   {
-    cout << "4" << endl;
-    Node* ptr = head;
-    while (ptr->next->key < temp->key)
-     ptr = ptr -> next;
-
-    Node* nextNode = ptr->next;
-    ptr->next = temp;
-    temp->next = nextNode;
-   }
-  
-   cout << "5" << endl;
 
    temp = ptr->next;
  } 
 
- cout << "6" << endl;
- cout << "end size: " << size() << endl;
+  Node* tailFind = head;
+  for(int i = 1; i < size(); i++)
+   tailFind = tailFind->next;
 
-
-   Node* tailFind = head;
-   for(int i = 1; i < size(); i++)
-   {
-    cout << i << endl;
-    cout << tailFind->key << endl;
-    tailFind = tailFind->next;
-   }
-
-   tail = tailFind;
-   tail->next = nullptr;
-/* Node* test = head;
- cout << "keys: " << endl;
- for(int t = 0; t < size(); t++)
- {
-  cout << test->key << endl;
-  test = test->next;
- }*/
+  tail = tailFind;
+  tail->next = nullptr;
 }
 
 
